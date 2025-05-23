@@ -76,6 +76,20 @@
     </div>
 </div>
 
+@if($errors->any())
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 @push('styles')
 <style>
     body {

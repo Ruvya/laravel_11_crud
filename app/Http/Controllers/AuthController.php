@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     // Show the registration form
     public function showRegisterForm() {
-        return view('register'); // Correct view path
+        return view('Auth.register'); // Correct view path
     }
 
     // Handle user registration
@@ -33,7 +33,7 @@ class AuthController extends Controller
 
     // Show the login form
     public function showLoginForm() {
-        return view('login'); // Correct view path
+        return view('Auth.login'); // Correct view path
     }
 
     // Handle user login
@@ -52,11 +52,11 @@ class AuthController extends Controller
     }
 
     // Handle user logout
-    public function logout(Request $request) {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/login');
-    }
+    public function logout(Request $request)
+{
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect()->route('login'); // Redirect to login page
+}
 }

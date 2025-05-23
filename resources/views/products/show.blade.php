@@ -48,8 +48,17 @@ btn-primary btn-sm">&larr; Back</a>
  {{ $product->description }}
  </div>
  </div>
- 
+
+
+
  </div>
+ <div class="col-md-5 text-center">
+       @if($product->image)
+         <img src="{{ Storage::url($product->image) }}" alt="Product Image" class="img-fluid rounded mb-3" style="max-height: 250px;">
+       @else
+         <img src="https://via.placeholder.com/250x250?text=No+Image"  class="img-fluid rounded mb-3" style="max-height: 250px;">
+       @endif
+     </div>
  </div>
  </div> 
 </div>

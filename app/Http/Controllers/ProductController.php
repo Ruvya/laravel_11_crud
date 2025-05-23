@@ -5,6 +5,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 class ProductController extends Controller
 {
  /**
@@ -26,10 +27,21 @@ class ProductController extends Controller
  /**
  * Store a newly created resource in storage.
  */
- public function store(StoreProductRequest $request) : 
-RedirectResponse
+ public function store(Request $request) : RedirectResponse
  {
- Product::create($request->validated());
+ $request->validate([
+ 'code' => 'required|unique:products,code',
+ 'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+ ]);
+
+ $data = $request->all();
+
+ if ($request->hasFile('image')) {
+ $data['image'] = $request->file('image')->store('products', 'public');
+ }
+
+ Product::create($data);
+
  return redirect()->route('products.index')
  ->withSuccess('New product is added successfully.');
  }
@@ -47,6 +59,8 @@ RedirectResponse
  {
  return view('products.edit', compact('product'));
  }
+
+ 
  /**
  * Update the specified resource in storage.
  */
@@ -67,3 +81,7 @@ $product) : RedirectResponse
  ->withSuccess('Product is deleted successfully.');
  }
 }
+
+
+
+    
